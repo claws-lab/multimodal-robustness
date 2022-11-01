@@ -5,6 +5,9 @@
 
 # Check out the Colab notebook: [link (coming soon)]()
 
+<center><img src="./assets/Figure2.png" width="1000"></center>
+<!-- <center><img src="./lifecycle.PNG" width="500"></center> -->
+
 # Overview of the Repository
 The codebase includes the following:
 - Extracting keywords from images and text. Extraction of keywords is done by identifying prominent objects in the image using a Scene Graph generator. Extraction of text keywords is done using YAKE (which is a part of the POINTER pipeline). 
