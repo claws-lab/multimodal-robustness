@@ -3,12 +3,17 @@
 *Authors*: [Gaurav Verma](https://gaurav22verma.github.io/), [Vishwa Vinay](https://www.linkedin.com/in/vishwa-vinay-b1b6881), [Ryan A. Rossi](http://ryanrossi.com/), [Srijan Kumar](https://faculty.cc.gatech.edu/~srijan/)  
 *Venue*: The 2022 Conference on Empirical Methods in Natural Language Processing (EMNLP 2022)
 
+
+<center><img src="./assets/Figure1.png" width="500"></center>
+
+
 # Check out the Colab notebook: [link (coming soon)]()
 
-<center><img src="./assets/Figure2.png" width="1000"></center>
-<!-- <center><img src="./lifecycle.PNG" width="500"></center> -->
-
 # Overview of the Repository
+
+
+<center><img src="./assets/Figure2.png" width="1000"></center>
+
 The codebase includes the following:
 - Extracting keywords from images and text. Extraction of keywords is done by identifying prominent objects in the image using a Scene Graph generator. Extraction of text keywords is done using YAKE (which is a part of the POINTER pipeline). 
 - Training the fusion-based multimodal classifier. The model is used in the second-stage fine-tuning of the pointer model.
