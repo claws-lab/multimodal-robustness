@@ -4,9 +4,6 @@
 *Venue*: The 2022 Conference on Empirical Methods in Natural Language Processing (EMNLP 2022)
 
 
-<center><img src="./assets/Figure1.png" width="500"></center>
-
-
 # Check out the Colab notebook: [link (coming soon)]()
 
 # Overview of the Repository
