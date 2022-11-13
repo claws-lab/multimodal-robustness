@@ -1,1 +1,270 @@
-Coming soon!
+<script src="http://www.google.com/jsapi" type="text/javascript"></script> 
+<script type="text/javascript">google.load("jquery", "1.3.2");</script>
+
+<style type="text/css">
+	body {
+		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+		font-weight:300;
+		font-size:18px;
+		margin-left: auto;
+		margin-right: auto;
+		width: 1100px;
+	}
+	
+	h1 {
+		font-size:32px;
+		font-weight:300;
+	}
+	
+	.disclaimerbox {
+		background-color: #eee;		
+		border: 1px solid #eeeeee;
+		border-radius: 10px ;
+		-moz-border-radius: 10px ;
+		-webkit-border-radius: 10px ;
+		padding: 20px;
+	}
+
+	video.header-vid {
+		height: 140px;
+		border: 1px solid black;
+		border-radius: 10px ;
+		-moz-border-radius: 10px ;
+		-webkit-border-radius: 10px ;
+	}
+	
+	img.header-img {
+		height: 140px;
+		border: 1px solid black;
+		border-radius: 10px ;
+		-moz-border-radius: 10px ;
+		-webkit-border-radius: 10px ;
+	}
+	
+	img.rounded {
+		border: 1px solid #eeeeee;
+		border-radius: 10px ;
+		-moz-border-radius: 10px ;
+		-webkit-border-radius: 10px ;
+	}
+	
+	a:link,a:visited
+	{
+		color: #1367a7;
+		text-decoration: none;
+	}
+	a:hover {
+		color: #208799;
+	}
+	
+	td.dl-link {
+		height: 160px;
+		text-align: center;
+		font-size: 22px;
+	}
+	
+	.layered-paper-big { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+		box-shadow:
+		0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
+		5px 5px 0 0px #fff, /* The second layer */
+		5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
+		10px 10px 0 0px #fff, /* The third layer */
+		10px 10px 1px 1px rgba(0,0,0,0.35), /* The third layer shadow */
+		15px 15px 0 0px #fff, /* The fourth layer */
+		15px 15px 1px 1px rgba(0,0,0,0.35), /* The fourth layer shadow */
+		20px 20px 0 0px #fff, /* The fifth layer */
+		20px 20px 1px 1px rgba(0,0,0,0.35), /* The fifth layer shadow */
+		25px 25px 0 0px #fff, /* The fifth layer */
+		25px 25px 1px 1px rgba(0,0,0,0.35); /* The fifth layer shadow */
+		margin-left: 10px;
+		margin-right: 45px;
+	}
+
+	.paper-big { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+		box-shadow:
+		0px 0px 1px 1px rgba(0,0,0,0.35); /* The top layer shadow */
+
+		margin-left: 10px;
+		margin-right: 45px;
+	}
+
+
+	.layered-paper { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+		box-shadow:
+		0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
+		5px 5px 0 0px #fff, /* The second layer */
+		5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
+		10px 10px 0 0px #fff, /* The third layer */
+		10px 10px 1px 1px rgba(0,0,0,0.35); /* The third layer shadow */
+		margin-top: 5px;
+		margin-left: 10px;
+		margin-right: 30px;
+		margin-bottom: 5px;
+	}
+	
+	.vert-cent {
+		position: relative;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+	
+	hr
+	{
+		border: 0;
+		height: 1px;
+		background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+	}
+</style>
+
+<html>
+<head>
+	<title>Multimodal Robustness</title>
+	<meta property="og:image" content="./assets/teaser.png"/> <!-- Facebook automatically scrapes this. Go to https://developers.facebook.com/tools/debug/ if you update and want to force Facebook to rescrape. -->
+	<meta property="og:title" content="Multimodal Robustness @ EMNLP 2022" />
+	<meta property="og:description" content="Paper title: Robustness of Fusion-based Multimodal Classifiers to Cross-Modal Content Dilutions; Venue: The 2022 Conference on Empirical Methods in Natural Language Processing (EMNLP 2022); Authors: Gaurav Verma, Vishwa Vinay, Ryan A. Rossi, Srijan Kumar; Affiliations: Georgia Institute of Technology, Adobe Research" />
+
+	<!-- Get from Google Analytics -->
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src=""></script> 
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-75863369-6');
+	</script>
+</head>
+
+<body>
+	<br>
+	<center>
+		<span style="font-size:36px"><b>Robustness of Fusion-based Multimodal Classifiers to<br/> Cross-Modal Content Dilutions</b></span><br/>
+		<span style="font-size:25px">[<a href="https://arxiv.org/abs/2211.02646">Paper</a>] [<a href="https://github.com/claws-lab/multimodal-robustness">GitHub</a>]</span><br/><br/>
+		<span><a href="https://gaurav22verma.github.io/">Gaurav Verma</a>, <a href="https://www.linkedin.com/in/vishwa-vinay-b1b6881">Vishwa Vinay</a>, <a href="http://ryanrossi.com/">Ryan A. Rossi</a>, and <a href="https://faculty.cc.gatech.edu/~srijan/">Srijan Kumar</a></span><br/><br/>
+		<span>Georgia Institute of Technology, Adobe Research</span><br/>
+		<a href="https://www.cc.gatech.edu/"><img src="./assets/gt-logo.png" width=200px></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://research.adobe.com/"><img src="./assets/adobe-logo.png" width=120px></a><br/><br/>
+
+		<span>⭐ Code and Colab notebook released [<a href="https://github.com/claws-lab/multimodal-robustness">GitHub link</a>]</span><br/>
+		<!-- <span>⭐ Released a summary video of the work [<a href="">YouTube link</a>]</span><br/> -->
+		<span>⭐ Paper accepted at EMNLP 2022 (main) [<a href="./assets/MultimodalRobustness_EMNLP2022.pdf">paper pdf</a>]</span><br/><br/>
+		<a href="https://2022.emnlp.org/"><img src="./assets/emnlp-logo.png" width=150px></a><br/><br/>
+
+	<hr>
+	<center>
+		<table align=center width=850px>
+			<tr>
+				<td width=260px>
+					<center>
+						<img class="round" style="width:700px" src="./assets/teaser-emnlp.jpg"/><br/><br/>
+						<b>Overview of our study</b>: We investigate the robustness of fusion-based deep multimodal classifiers to cross-modal dilutions. We generate dilutions that maintain semantic relevance with the original text and image while causing incorrect classifications. We also demonstrate the realistic nature of cross-modal dilutions using human evaluation. The figure shows an actual example from our experiments. 
+					</center>
+				</td>
+			</tr>
+		</table>
+
+		<hr>
+
+	</center>
+	<!-- 
+	<center><h1>Talk (~5 mins)</h1></center>
+	<p align="center">
+		<iframe width="660" height="395" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen align="center"></iframe>
+	</p>
+
+	<table align=center width=800px>
+		<br>
+		<tr>
+			<center>
+				<span style="font-size:28px">[ <a href="">YouTube link</a> ]</span> <span style="font-size:28px">[ <a href=''>slides (pdf)</a> ]
+				</span>
+			</center>
+		</tr>
+	</table>
+
+	<hr> -->
+
+	<table align=center width=850px>
+		<center><h1>Technical Abstract</h1></center>
+		<tr>
+			<td>
+				As multimodal learning finds applications in a wide variety of high-stakes societal tasks, investigating their robustness becomes important. Existing work has focused on understanding the robustness of vision-and-language models to <em>imperceptible</em> variations on benchmark tasks. In this work, we investigate the robustness of multimodal classifiers to <em>cross-modal dilutions</em> – a <em>plausible</em> variation. We develop a model that, given a multimodal (image + text) input, generates additional dilution text that <em>(a)</em> maintains relevance and topical coherence with the image and existing text, and <em>(b)</em> when added to the original text, leads to misclassification of the multimodal input. Via experiments on Crisis Humanitarianism and Sentiment Detection tasks, we find that the performance of task-specific fusion-based multimodal classifiers drops by 23.3% and 22.5%, respectively, in the presence of dilutions generated by our model. Metric-based comparisons with several baselines and human evaluations indicate that our dilutions show higher relevance and topical coherence, while simultaneously being more effective at demonstrating the brittleness of the multimodal classifiers. Our work aims to highlight and encourage further research on the robustness of deep multimodal models to realistic variations, especially in human-facing societal applications. 
+			</td>
+		</tr>
+	</table>
+	<br>
+	<hr>
+
+	<center><h1>Code and Resources</h1></center>
+
+
+	<table align=center width=800px>
+		<tr><center>
+			<span style="font-size:28px">&nbsp;<a href='https://github.com/claws-lab/multimodal-robustness'>[GitHub Link]</a>
+			</center>
+		</span>
+	</table>
+
+	<table align=center width=850px>
+		<center>
+			<tr>
+				<td>
+					<b>Code and Colab</b>: We make the code for training the cross-modal dilution generator (XMD) available. We also release a Colab notebook to load the trained models files to facilitate quick and easy generation of cross-modal dilutions with automated as well as manual keywords. The Google Colab notebook can be accessed here: <a href="https://colab.research.google.com/drive/1r4fprlHhCrSYZHXKxDQrSxlNbJyx5-gT?usp=sharing">Colab link</a><br/><br/>
+
+					<b>Datasets</b>: In this work, we consider two clasiffication tasks that are human-facing and involve user-generated data. Please download the datasets from respective webpages:<br/>
+					1. Crisis humanitarianism (CrisisMMD): <a href="https://crisisnlp.qcri.org/crisismmd">https://crisisnlp.qcri.org/crisismmd</a><br/>
+					2. Emotion classification: <a href="https://github.com/emoclassifier/emoclassifier.github.io">https://github.com/emoclassifier/emoclassifier.github.io</a> (if you cannot access the dataset at its original source (proposed in <a href="https://arxiv.org/abs/1708.02099">this paper</a>), please contact us for the Reddit URLs we used for our work.)<br/><br/>
+				</td>
+			</tr>
+		</center>
+	</table>
+
+	<br>
+	<hr>
+	<table align=center width=1100px>
+		<center><h1>Paper and Bibtex</h1></center>
+		<tr>
+			<td><a href="./assets/MultimodalRobustness_EMNLP2022.pdf"><img class="layered-paper-big" style="height:175px" src="./assets/screenshot.png"/></a></td>
+			<td><span style="font-size:14pt">Gaurav Verma, Vishwa Vinay, Ryan A. Rossi, Srijan Kumar<br>
+				<b>Robustness of Fusion-based Multimodal Classifiers to Cross-Modal Content Dilutions</b><br>
+				In Proceedings of the 2022 Conference on Empirical Methods in Natural Language Processing (EMNLP 2022).<br><br/>
+				webpage: <a href="https://github.com/claws-lab/multimodal-robustness">https://github.com/claws-lab/multimodal-robustness</a><br/>
+				arXiv: <a href="https://arxiv.org/abs/2211.02646">https://arxiv.org/abs/2211.02646</a><br><br/><br/>
+			</td>
+		</tr>
+	</table>
+	<br>
+
+	<table align=center width=670px>
+		<tr>
+			<td><span style="font-size:11pt">
+				<span style="font-size: 14pt">Bibtex:</span><br/><br/>
+				<left>
+				<code>
+					<text style="color: red">@inproceedings</text>{verma2022robustness,<br/>
+  					<text style="color: blue">title</text>={Robustness of Fusion-based Multimodal Classifiers to Cross-Modal Content Dilutions},<br/>
+  					<text style="color: blue">author</text>={Verma, Gaurav and Vinay, Vishwa and Rossi, Ryan A and Kumar, Srijan},<br/>
+  					<text style="color: blue">booktitle</text>={In Proceedings of the 2022 Conference on Empirical Methods in Natural Language Processing (EMNLP 2022)},<br/>
+  					<text style="color: blue">year</text>={2022}<br/>
+					}
+				</code>
+			</left>
+			</td>
+		</tr>
+	</table>
+
+	<hr>
+	<br>
+
+	<table align=center width=900px>
+		<tr>
+			<td width=400px>
+				<center>
+					The template was originally made by <a href="http://web.mit.edu/phillipi/">Phillip Isola</a> and <a href="http://richzhang.github.io/">Richard Zhang</a>; the code can be found <a href="https://github.com/richzhang/webpage-template">here</a>.
+				</center>
+			</td>
+		</tr>
+	</table>
+
+<br>
+</body>
+</html>
