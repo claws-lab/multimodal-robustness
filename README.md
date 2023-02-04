@@ -1,5 +1,5 @@
 # Robustness of Fusion-based Multimodal Classifiers to Cross-Modal Content Dilutions (EMNLP 2022, Oral) 
-*Links*: [arXiv](https://arxiv.org/abs/2211.02646); [webpage](https://claws-lab.github.io/multimodal-robustness/); [video (coming soon)](); [slides (coming soon)]()  
+*Links*: [arXiv](https://arxiv.org/abs/2211.02646); [webpage](https://claws-lab.github.io/multimodal-robustness/); [presentation slides](https://github.com/claws-lab/multimodal-robustness/blob/main/assets/Verma_RobustnessFinal.pdf)  
 *Authors*: [Gaurav Verma](https://gaurav22verma.github.io/), [Vishwa Vinay](https://www.linkedin.com/in/vishwa-vinay-b1b6881), [Ryan A. Rossi](http://ryanrossi.com/), [Srijan Kumar](https://faculty.cc.gatech.edu/~srijan/)  
 *Venue*: The 2022 Conference on Empirical Methods in Natural Language Processing (EMNLP 2022)
 
