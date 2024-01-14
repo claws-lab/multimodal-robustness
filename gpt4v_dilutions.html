@@ -143,8 +143,8 @@
 <body>
 	<br>
 	<center>
-		<span style="font-size:36px"><b>How Robust is GPT-4V to Cross-Modal Insertions?</b></span><br/>
-		<span style="font-size:20px">Part 1: Quick Assessment of the Robustness of GPT-4V's Visual Entailment Capabilities (SNLI-VE)</span><br/><br/>
+		<span style="font-size:36px"><b>How Robust is GPT-4V to Cross-Modal Dilutions?</b></span><br/>
+		<span style="font-size:20px">Part 2: Quick Assessment of the Robustness of GPT-4V's Classification Capabilities (Humanitarianism dataset)</span><br/><br/>
 		<span><a href="https://gaurav22verma.github.io/">Gaurav Verma</a> <em><span style="font-size: 10pt;">and</span></em> <a href="https://faculty.cc.gatech.edu/~srijan/">Srijan Kumar</a></span><br/>
 		<span style="font-size: 11pt;">Georgia Institute of Technology</span><br/>
 		<a href="https://www.cc.gatech.edu/"><img src="./assets/gt-logo.png" width=170px></a><br/><br/>
@@ -162,11 +162,11 @@
 				<td width=260px>
 					<!-- <center> -->
                         <center><h1>Summary (tl;dr)</h1></center>
-						<b>How robust is GPT-4V to realistic changes in multimodal data?</b> A simple way to check that is to introduce realistic changes in the input data and see if GPT-4V predictions remain the same. For instance, instead of asking GPT-4V to output if the input image depicts "a boy wearing a shirt playing the piano ," we can ask if it depicts "a <em>young</em> boy wearing a <em>green</em> shirt playing the piano." Provided that the input image does depict a young boy wearing a green shirt, GPT-4V's output should remain the same. In our <a href="https://aclanthology.org/2023.acl-long.890/">ACL'23</a> work, we call these changes in the input as <em>cross-modal insertions</em>.<br/><br/>
+						<b>How robust is GPT-4V to realistic changes in multimodal data?</b> A simple way ...<br/><br/>
 
-						<b>On a visual entailment task</b> – i.e., given an image and a textual description, GPT-4V's job is to predict if the decription entails, contradicts, or is neutral to the information in the image, we find that GPT-4V's performance drops by 21.59% when faced with cross-modal insertions. This is a notable drop. Qualitatively, since for some of multimodal examples the inserted attributes are demographic attributes, it is possible that GPT-4V is "cautious" in its prediction. But otherwise, there are examples where GPT-4V struggles with multimodal reasoning in presence of cross-modal insertions.<br/><br/>
+						<b>On a multimodal classification task</b> – i.e., given an image and a textual description, GPT-4V's job is to predict if the correct classification label, ...<br/><br/>
 						
-						<b>Lastly</b>, as a passing remark, we also find that even without any changes in the input, GPT-4V's zero-shot performance on the visual entailment task is <em>not</em> close to models that learn with full supervision.<br/><br/>
+						<b>Lastly</b>, ...<br/><br/>
 
 						<em>Continue reading for more details!</em>
 
@@ -175,7 +175,7 @@
 						
 						
 						<center><h1>Introduction and Takeaways</h1></center>
-						<b>Background</b>: We have investigated the robustness of vision-language models when faced with realistic changes in the text that are cross-modally grounded (<em>dilutions</em> in <a href="https://claws-lab.github.io/multimodal-robustness/" target="_blank">Verma et al., (EMNLP 2022)</a> and <em>insertions</em> in <a href = "https://github.com/claws-lab/multimodal-robustness-xmai">Ramshetty et al. (ACL 2023)</a>). Collectively, experiments across multiple multimodal classification tasks,  cross-modal retrieval, and visual entailment tasks have indicated that the performance of leading <a href="https://github.com/openai/CLIP" target="_blank">CLIP</a>-like vision-language models drops notably – i.e., anywhere between 15% to 25% – when faced with cross-modal dilutions or insertions. The following figure provides qualitative examples of dilutions and insertions that lead to misclassification of the multimodal input.<br/><br/>
+						<b>Background</b>: ...<br/><br/>
 
 						<center>
                             <img src="./assets/dilution_insertion.png"  width="800">
@@ -183,58 +183,58 @@
                         </center>
 
 
-                        <b>The question</b>: Now, we are interested in assessing how robust GPT-4V is to these cross-modal changes. In the first part of this series, we focus on the robustness to cross-modal insertions and present the results on a subset of SNLI-VE dataset. Put concisely, SNLI-VE involves a premise (image) and a hypothesis (text) and the task is to predict whether the information in the text contradicts/entails from the information in the image or are the two neutral; essentially a 3-class classification task. GPT-4V's performance on this task is assessed under two settings: (i) when the textual hypothesis is unaltered (denoted as <span style="color: blue;">original</span>), and (ii) when the textual hypothesis is altered by inserting attributes of objects in the corresponding image (i.e., the insertion is cross-modal grounded) (denoted as <span style="color: red;">w/ cross-modal insertion</span>). We show the results in the following figure. For comparison, we have a CLIP-style model trained using the METER framework for the visual entailment task, and assessed under the same two settings. <br/><br/>
+                        <b>The question</b>: ... <br/><br/>
 
-						<b>Takeaways</b>: We have two key takeaways: (i) While the zero-shot visual entailment prediction capabilities of GPT-4V are impressive, there are not close to models that learn with full supervision (<a href="https://paperswithcode.com/sota/visual-entailment-on-snli-ve-test" target="_blank">view SNLI-VE leaderboard here</a>). (ii) GPT-4V's performance drops by 21.59% when faced with cross-modal insertions. This is a notable drop. We present some qualitative insights about what is it about cross-modal insertions that make GPT-4V predict incorrectly. <br/><br/>
+						<b>Takeaways</b>: ... <br/><br/>
 
                         <center>
-                            <img src="./assets/gpt4v.png" alt="Performance comparison between the robustness of zero-shot GPT-4V model and a model fine-tuned based on the METER framework." width="500">
-                            <div class="caption"><b>Figure 2</b>: While a model that is fine-tuned on the SNLI-VE train set using the METER framework (<a href="https://openaccess.thecvf.com/content/CVPR2022/papers/Dou_An_Empirical_Study_of_Training_End-to-End_Vision-and-Language_Transformers_CVPR_2022_paper.pdf">Dou et al.; CVPR 2022</a>), experiences a drop of 18.81% in the presence of cross-modal insertions, GPT-4V, when prompted in a zero-shot setting, experiences a drop of 21.59%.  Results for the METER fine-tuned model are taken from <a href="https://github.com/claws-lab/multimodal-robustness-xmai">Ramshetty et al.; ACL 2023</a>. Due to rate limits, we conducted the GPT-4V experiments on a random subset of the test set (<em>n = 300</em>).</div><br/><br/>
+                            <img src="" width="500">
+                            <div class="caption"><b>Figure 2</b>: ...</div><br/><br/>
                         </center>
 
 
-                        <b>What kind of cross-modal insertions confuse GPT-4V?</b> Of the 61 examples (out of 300) that were miscategorized by GPT-4V <em>after</em> cross-modal insertions were made (i.e., these examples were categorized accurately in their original form), quite a few examples involved the insertion of attributes that could relate to demographic attributes. For instance, for the following two examples, the predicted label changed when the men/person were specified to be white. Such cases can be argued to be an artifact of our approach and are not really a limitation of the robustness of the GPT-4V model. <br/><br/>
+                        <b>What kind of cross-modal dilutions confuse GPT-4V?</b> ... <br/><br/>
                         
                         <center>
                             <table>
                                 <tr>
                                     <td style="border: 2px solid black; border-radius: 10px; padding: 10px;">
                                         <center>
-                                        <img src="./assets/climbing.jpg" width="270px">
+                                        <img src="" width="270px">
                                         </center>
                                     </td>
                                     <td style="border: 2px solid black; border-radius: 10px; padding: 10px;">
                                         <center>
-                                        <img src="./assets/camera.jpg" width="300px">
+                                        <img src="" width="300px">
                                         </center>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="border: 2px solid black; border-radius: 10px; padding: 10px;">
-                                        original: <span style="color: blue;">a person is climbing (<em>neutral</em>) <span style="color: green;">✓</span></span> <br>
-                                        modified: <span style="color: red;">a white person is climbing (<em>contradiction</em>) <span style="color: red;">✗</span></span>
+                                        original: <span style="color: blue;">...<span style="color: green;">✓</span></span> <br>
+                                        modified: <span style="color: red;">... <span style="color: red;">✗</span></span>
                                     </td>
                                     <td style="border: 2px solid black; border-radius: 10px; padding: 10px;">
-                                        original: <span style="color: blue;">two men look toward a camera. (<em>entailment</em>) <span style="color: green;">✓</span></span> <br>
-                                        modified: <span style="color: red;"> two white men look toward a press camera. (<em>contradiction</em>) <span style="color: red;">✗</span></span>
+                                        original: <span style="color: blue;">... <span style="color: green;">✓</span></span> <br>
+                                        modified: <span style="color: red;">... <span style="color: red;">✗</span></span>
                                     </td>
                                 </tr>
                             </table>
                         </center><br/>
                         
-                        However, for some examples, the change in prediction was not completely justifiable – check out the two examples below. Perhaps investigating the rationales (obtained via chain-of-thought prompting) could help in investigating the reasons for such misclassifications. Additionally, we believe that in-context learning could improve both the original and the cross-modal insertion accuracies of GPT-4V. <br/><br/>
+                        ... <br/><br/>
                         
                         <center>
                             <table>
                                 <tr>
                                     <td style="border: 2px solid black; border-radius: 10px; padding: 10px;">
                                         <center>
-                                        <img src="./assets/waiter.jpg" width="270px">
+                                        <img src="" width="270px">
                                         </center>
                                     </td>
                                     <td style="border: 2px solid black; border-radius: 10px; padding: 10px;">
                                         <center>
-                                        <img src="./assets/young_child.jpg" width="300px">
+                                        <img src="" width="300px">
                                         </center>
                                     </td>
                                 </tr>
@@ -266,22 +266,14 @@
 		<center><h1>Methodology and Resources</h1></center>
 		<tr>
 			<td>
-				<b>Data</b>: We conducted experiments on a subset of 300 examples from the SNLI-VE test set, which were randomly sampled from the original test set while ensuring 100 examples from each of the three classes (contradiction, entailment, and neutral). We used the cross-modal insertions introduced to the corresponding original text from our prior study (<a href="https://github.com/claws-lab/multimodal-robustness-xmai" target="_blank">Ramshetty et al. (ACL 2023)</a>). The choice of experimenting with 300 examples was largely driven by the rate limits imposed by the OpenAI API [<a href="https://community.openai.com/t/rate-limit-for-gpt-4v-preview/476851" target="_blank">more here</a>]. For the presented experiments, the GPT-4V model was accessed during November 7-14, 2023.<br/><br/>
+				<b>Data</b>: ...<br/><br/>
                 
-                <b>Prompt</b>: This is the prompt we used for doing zero-shot visual entailment inference with GPT-4V:<br/><br/>
+                <b>Prompt</b>: ...<br/><br/>
                 <code style="color: purple;">
-					Given the image as premise and the following sentence as hypothesis, assign one of the three labels: entailment, contradiction, or neutral, based on the relationship conveyed by the image and the text. The definitions of the labels are provided below.<br/>
-                    entailment: if there is enough evidence in the image to conclude that the sentence is true.<br/>
-                    contradiction: if there is enough evidence in the image to conclude that the sentence is false.<br/>
-                    neutral: if the evidence in the image is insufficient to draw a conclusion about the text.<br/><br/>
-                    
-                    You must respond only with one of the three words: entailment, contradiction, or neutral, and nothing else.<br/><br/>
-                    
-                    sentence: {text goes here}<br/>
-                    label:<br/>
+					...
 				</code><br/>
 
-                <b>Resources</b>: All our code, data, and other resources used to do this analysis are available in this <a href="https://github.com/claws-lab/multimodal-robustness-xmai">GitHub repository</a>. Please feel free to reach out to us if you have any questions or comments.<br/><br/>
+                <b>Resources</b>: ... <a href="">GitHub repository</a>. Please feel free to reach out to us if you have any questions or comments.<br/><br/>
 			</td>
 		</tr>
 	</table>
@@ -313,7 +305,6 @@
 			</td>
         </tr>
 	</table>
-    <span style="font-size: 11pt;"><b><em>What's next?</em></b><br/> Stay tuned for more follow-up parts from us within this series where we investigate multimodal language models!</span><br/>
 	<br>
 	<hr>
 	<br>
