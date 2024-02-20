@@ -15,6 +15,43 @@
 		font-size:32px;
 		font-weight:300;
 	}
+
+	#modelTable {
+		width: 95%;
+		border-collapse: separate;
+		border-spacing: 0;
+		margin: 10px auto;
+		border: 1px solid black;
+		border-radius: 10px;
+		overflow: hidden;
+	}
+	#modelTable th, #modelTable td {
+		border: none;
+		padding: 5px 10px;
+		text-align: center;
+	}
+	#modelTable th {
+		background-color: #f2f2f2;
+	}
+	#modelTable tr:nth-child(even) {background-color: #f9f9f9;}
+	#modelTable tr:hover {background-color: #e8e8e8;}
+
+	/* Image preview styles */
+	.img-preview {
+		display: none;
+		position: absolute;
+		z-index: 1000;
+		border: 1px solid #ddd;
+		border-radius: 5px;
+		padding: 5px;
+		background-color: white;
+	}
+	.img-link:hover + .img-preview {
+		display: block;
+	}
+	.img-link {
+		cursor: pointer;
+	}
 	
 	.disclaimerbox {
 		background-color: #eee;		
@@ -126,34 +163,17 @@
 	<title>GPT-4V's Robustness</title>
 	<meta property="og:image" content="./assets/gpt4v.png"/> 
 	<meta property="og:title" content="Robustness of GPT-4V to Cross-Modal Insertions" />
-	<meta property="og:description" content="Title: Assessing the Robustness of GPT-4V to Cross-Modal Insertions. Authors: Gaurav Verma and Srijan Kumar; Affiliation: Georgia Institute of Technology" />
-
-	<!-- Get from Google Analytics -->
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src=""></script> 
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-
-		gtag('config', 'UA-75863369-6');
-	</script>
+	<meta property="og:description" content="Title: Assessing the Robustness of Multimodal LLMs like GPT-4V, Gemini, LLaVA-1.5, to Cross-Modal Insertions. Authors: Gaurav Verma and Srijan Kumar; Affiliation: Georgia Institute of Technology" />
 </head>
 
 <body>
 	<br>
 	<center>
-		<span style="font-size:36px"><b>How Robust is GPT-4V to Cross-Modal Dilutions?</b></span><br/>
-		<span style="font-size:20px">Part 2: Quick Assessment of the Robustness of GPT-4V's Classification Capabilities (Humanitarianism dataset)</span><br/><br/>
+		<span style="font-size:36px"><b>Assessing the Robustness of Multimodal LLMs Against<br/> Cross-Modal Dilutions and Insertions</b></span><br/><br/>
 		<span><a href="https://gaurav22verma.github.io/">Gaurav Verma</a> <em><span style="font-size: 10pt;">and</span></em> <a href="https://faculty.cc.gatech.edu/~srijan/">Srijan Kumar</a></span><br/>
 		<span style="font-size: 11pt;">Georgia Institute of Technology</span><br/>
 		<a href="https://www.cc.gatech.edu/"><img src="./assets/gt-logo.png" width=170px></a><br/><br/>
-
-<!-- 
-		<span>⭐ Slides from EMNLP 2022 Oral are now available [<a href="./assets/Verma_RobustnessFinal.pdf">slides (pdf)</a>]</span><br/>
-		<span>⭐ Code and Colab notebook released [<a href="https://github.com/claws-lab/multimodal-robustness">GitHub link</a>]</span><br/>
-		<span>⭐ Paper accepted at EMNLP 2022 (main) [<a href="./assets/MultimodalRobustness_EMNLP2022.pdf">paper pdf</a>]</span><br/><br/>
-		<a href="https://2022.emnlp.org/"><img src="./assets/emnlp-logo.png" width=150px></a><br/><br/> -->
+	</center>
 
 	<hr>
 	<center>
@@ -162,7 +182,7 @@
 				<td width=260px>
 					<!-- <center> -->
                         <center><h1>Summary (tl;dr)</h1></center>
-						<b>How robust is GPT-4V to realistic changes in multimodal data?</b> A simple way ...<br/><br/>
+						<b>How robust are multimodal LLMs to realistic changes in multimodal data?</b> A simple way ...<br/><br/>
 
 						<b>On a multimodal classification task</b> – i.e., given an image and a textual description, GPT-4V's job is to predict if the correct classification label, ...<br/><br/>
 						
@@ -187,13 +207,58 @@
 
 						<b>Takeaways</b>: ... <br/><br/>
 
-                        <center>
-                            <img src="" width="500">
-                            <div class="caption"><b>Figure 2</b>: ...</div><br/><br/>
-                        </center>
+
+						<center>
+							<table id="modelTable">
+								<tr>
+									<th>Model</th>
+									<th>Original (F1)</th>
+									<th>Dilution (%)</th>
+									<th>Insertion (%)</th>
+									<th>Dilution + Insertion (%)</th>
+									<th>Visuals</th>
+								</tr>
+								<tr>
+									<td>GPT-4(V)</td>
+									<td>0.67</td>
+									<td>-4.47</td>
+									<td>+1.49</td>
+									<td>-2.98</td>
+									<td>
+										<a href="./assets/humanitarian_gpt4v.png" target="_blank" class="img-link">View Image</a>
+										<div class="img-preview"><img src="./assets/humanitarian_gpt4v.png" style="width: 100px;"></div>
+									</td>
+								</tr>
+								<tr>
+									<td>Gemini Pro</td>
+									<td>0.36</td>
+									<td>-2.78</td>
+									<td>+5.56</td>
+									<td>+2.78</td>
+									<td>
+										<a href="./assets/humanitarian_gemini.png" target="_blank" class="img-link">View Image</a>
+										<div class="img-preview"><img src="./assets/humanitarian_gemini.png" style="width: 100px;"></div>
+									</td>
+								</tr>
 
 
-                        <b>What kind of cross-modal dilutions confuse GPT-4V?</b> ... <br/><br/>
+								<tr>
+									<td>LLaVA-1.5-13B</td>
+									<td>0.39</td>
+									<td>-28.20</td>
+									<td>+5.13</td>
+									<td>-25.64</td>
+									<td>
+										<a href="./assets/humanitarian_llaval1point5.png" target="_blank" class="img-link">View Image</a>
+										<div class="img-preview"><img src="./assets/humanitarian_llaval1point5.png" alt="Model B Image" style="width: 100px;"></div>
+									</td>
+								</tr>
+								<!-- Add more rows here -->
+							</table>
+						</center><br/><br/>			
+
+
+                        <b>What kind of cross-modal dilutions confuse multimodal LLMs?</b> ... <br/><br/>
                         
                         <center>
                             <table>
@@ -320,5 +385,33 @@
 	</table>
 
 <br>
+
+<script>
+	function adjustColors() {
+		var table = document.getElementById("modelTable");
+		for (var i = 1, row; row = table.rows[i]; i++) {
+			// Iterate through rows, skip the first (header row)
+			for (var j = 2, col; col = row.cells[j]; j++) {
+				// Iterate through columns, skip the first two
+				var value = parseInt(col.innerHTML, 10);
+				var color = getColorForPercentage(value);
+				col.style.backgroundColor = color;
+			}
+		}
+	}
+	
+	function getColorForPercentage(percentage) {
+		var intensity = Math.abs(percentage) > 100 ? 0 : 255 - Math.round(2.55 * Math.abs(percentage));
+		if (percentage > 0) {
+			return `rgb(${intensity}, 255, ${intensity})`; // Shades of green for positive values
+		} else {
+			return `rgb(255, ${intensity}, ${intensity})`; // Shades of red for negative values
+		}
+	}
+	
+	// Run adjustColors function after the page is fully loaded
+	window.onload = adjustColors;
+	</script>
+
 </body>
 </html>
