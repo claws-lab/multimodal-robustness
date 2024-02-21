@@ -160,7 +160,7 @@
 
 <html>
 <head>
-	<title>GPT-4V's Robustness</title>
+	<title>MLLM Robustness</title>
 	<meta property="og:image" content="./assets/gpt4v.png"/> 
 	<meta property="og:title" content="Robustness of GPT-4V to Cross-Modal Insertions" />
 	<meta property="og:description" content="Title: Assessing the Robustness of Multimodal LLMs like GPT-4V, Gemini, LLaVA-1.5, to Cross-Modal Insertions. Authors: Gaurav Verma and Srijan Kumar; Affiliation: Georgia Institute of Technology" />
@@ -216,14 +216,38 @@
 									<th>Dilution (%)</th>
 									<th>Insertion (%)</th>
 									<th>Dilution + Insertion (%)</th>
-									<th>Visuals</th>
+									<th>All results</th>
 								</tr>
+
+
+								<tr>
+									<td>Random (uniform)</td>
+									<td>0.17</td>
+									<td>--</td>
+									<td>--</td>
+									<td>--</td>
+									<td>
+										--
+									</td>
+								</tr>
+
+								<tr>
+									<td>MM-Fusion</td>
+									<td>0.73</td>
+									<td>--</td>
+									<td>--</td>
+									<td>--</td>
+									<td>
+										--
+									</td>
+								</tr>
+
 								<tr>
 									<td>GPT-4(V)</td>
 									<td>0.67</td>
-									<td>-4.47</td>
-									<td>+1.49</td>
-									<td>-2.98</td>
+									<td>-4.47 %</td>
+									<td>+1.49 %</td>
+									<td>-2.98 %</td>
 									<td>
 										<a href="./assets/humanitarian_gpt4v.png" target="_blank" class="img-link">View Image</a>
 										<div class="img-preview"><img src="./assets/humanitarian_gpt4v.png" style="width: 100px;"></div>
@@ -232,9 +256,9 @@
 								<tr>
 									<td>Gemini Pro</td>
 									<td>0.36</td>
-									<td>-2.78</td>
-									<td>+5.56</td>
-									<td>+2.78</td>
+									<td>-2.78 %</td>
+									<td>+5.56 %</td>
+									<td>+2.78 %</td>
 									<td>
 										<a href="./assets/humanitarian_gemini.png" target="_blank" class="img-link">View Image</a>
 										<div class="img-preview"><img src="./assets/humanitarian_gemini.png" style="width: 100px;"></div>
@@ -245,14 +269,27 @@
 								<tr>
 									<td>LLaVA-1.5-13B</td>
 									<td>0.39</td>
-									<td>-28.20</td>
-									<td>+5.13</td>
-									<td>-25.64</td>
+									<td>-28.20 %</td>
+									<td>+5.13 %</td>
+									<td>-25.64 %</td>
 									<td>
 										<a href="./assets/humanitarian_llaval1point5.png" target="_blank" class="img-link">View Image</a>
 										<div class="img-preview"><img src="./assets/humanitarian_llaval1point5.png" alt="Model B Image" style="width: 100px;"></div>
 									</td>
 								</tr>
+
+								<tr>
+									<td>moondream1</td>
+									<td>0.13</td>
+									<td>-7.69 %</td>
+									<td>0.00 %</td>
+									<td>+7.69 %</td>
+									<td>
+										<a href="./assets/humanitarian_moondream1.png" target="_blank" class="img-link">View Image</a>
+										<div class="img-preview"><img src="./assets/humanitarian_moondream1.png" alt="Model B Image" style="width: 100px;"></div>
+									</td>
+								</tr>
+
 								<!-- Add more rows here -->
 							</table>
 						</center><br/><br/>			
