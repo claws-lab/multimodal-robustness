@@ -17,7 +17,7 @@
 	}
 
 	#modelTable {
-		width: 95%;
+		width: 100%;
 		border-collapse: separate;
 		border-spacing: 0;
 		margin: 10px auto;
@@ -213,6 +213,7 @@
 								<tr>
 									<th>Model</th>
 									<th>Original (F1)</th>
+									<th>Failure rate</th>
 									<th>Dilution</th>
 									<th>Insertion</th>
 									<th>Dilution + Insertion</th>
@@ -226,6 +227,7 @@
 									<td>--</td>
 									<td>--</td>
 									<td>--</td>
+									<td>--</td>
 									<td>
 										--
 									</td>
@@ -233,18 +235,21 @@
 
 								<tr>
 									<td>MM-Fusion</td>
-									<td>0.73</td>
-									<td>--</td>
-									<td>--</td>
-									<td>--</td>
+									<td>0.75</td>
+									<td>0.00 %</td>
+									<td>-21.53 %</td>
+									<td>-2.82 %</td>
+									<td>-19.92 %</td>
 									<td>
-										--
+										<a href="./assets/humanitarian_mm_fusion.png" target="_blank" class="img-link">View Image</a>
+										<div class="img-preview"><img src="./assets/humanitarian_mm_fusion.png" style="width: 100px;"></div>
 									</td>
 								</tr>
 
 								<tr>
 									<td>GPT-4(V)</td>
 									<td>0.67</td>
+									<td>0.00 %</td>
 									<td>-4.47 %</td>
 									<td>+1.49 %</td>
 									<td>-2.98 %</td>
@@ -256,6 +261,7 @@
 								<tr>
 									<td>Gemini Pro</td>
 									<td>0.36</td>
+									<td>0.10 - 0.32 %</td>
 									<td>-2.78 %</td>
 									<td>+5.56 %</td>
 									<td>+2.78 %</td>
@@ -269,6 +275,7 @@
 								<tr>
 									<td>LLaVA-1.5-13B</td>
 									<td>0.39</td>
+									<td>0.00 %</td>
 									<td>-28.20 %</td>
 									<td>+5.13 %</td>
 									<td>-25.64 %</td>
@@ -281,6 +288,7 @@
 								<tr>
 									<td>moondream1</td>
 									<td>0.13</td>
+									<td>5.46 - 13.05 %</td>
 									<td>-7.69 %</td>
 									<td>0.00 %</td>
 									<td>+7.69 %</td>
@@ -294,60 +302,96 @@
 							</table>
 						</center><br/><br/>			
 
+						<hr/><br/><br/>
 
-                        <b>What kind of cross-modal dilutions confuse multimodal LLMs?</b> ... <br/><br/>
+                        <center><h2>What kind of cross-modal dilutions confuse multimodal LLMs?</h2></center>
+
+						GPT-4(V) seems to be the best MLLM -- the zero-shot performance is 0.67, which is pretty close to that of a fine-tuned multimodal fusion model (0.73). Additionally, the failure rate, and changes in performance due to dilution, insertion, and dilution + insertion are also quite low for GPT-4(V). Let us look at the instances where GPT-4(V) makes an incorrect prediction.<br/><br/>
                         
-                        <center>
-                            <table>
+                        
+						
+						<span style="text-align: left;"><b>On introducing dilutions:</b> Looking back at the definitions of these categories, which were made available in the prompt, the classifications made by GPT-4(V) on diluting the original text do not make a lot of sense.</span>
+						<center>
+							
+							<table>
                                 <tr>
                                     <td style="border: 2px solid black; border-radius: 10px; padding: 10px;">
                                         <center>
-                                        <img src="" width="270px">
+                                        <img src="./assets/920216066416173056_0.PNG" width="320px"><br/>
                                         </center>
                                     </td>
                                     <td style="border: 2px solid black; border-radius: 10px; padding: 10px;">
                                         <center>
-                                        <img src="" width="300px">
+                                        <img src="./assets/910258440077025280_0.PNG" width="260px">
                                         </center>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="border: 2px solid black; border-radius: 10px; padding: 10px;">
-                                        original: <span style="color: blue;">...<span style="color: green;">✓</span></span> <br>
-                                        modified: <span style="color: red;">... <span style="color: red;">✗</span></span>
+                                        <b>original</b>: Sarasota group escapes CA wildfire  #usa #vacation #travel <span style="color: blue;">not_humanitarian <span style="color: green;">✓</span></span> <br>
+                                        <b>diluted</b>: Sarasota group escapes CA wildfire  #usa #vacation #travel.  In the comforting serenity of a vineyard, the group finds solace, celebrating their safety with a well-deserved feast and local wine. Their smiles serve as a reminder of the ability to find joy.<span style="color: red;"> affected_individuals <span style="color: red;">✗</span></span>
                                     </td>
                                     <td style="border: 2px solid black; border-radius: 10px; padding: 10px;">
-                                        original: <span style="color: blue;">... <span style="color: green;">✓</span></span> <br>
-                                        modified: <span style="color: red;">... <span style="color: red;">✗</span></span>
+                                        <b>original</b>: @username Hi FirstName LastName here had a scary time last plane from Orlando b4 #Irma hope all in #Florida r ok <span style="color: blue;">not_humanitarian <span style="color: green;">✓</span></span> <br>
+                                        <b>diluted</b>: @username Hi FirstName LastName here had a scary time last plane from Orlando b4 #Irma hope all in #Florida r ok. It's comforting to be back home with the family pet after such an ordeal. Our fluffy cat sure seems oblivious to the hurricanes and is just happy to have us home<span style="color: red;"> other_relevant_information <span style="color: red;">✗</span></span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </center><br/><br/>
+                        
+                        
+						<span style="text-align: left;"><b>On introducing insertions:</b> Overall, GPT-4(V) demonstrates slightly better performances when relevant insertions are made from the image to the text. However, there are still some examples where insertions cause incorrect predcitions.</span>
+                        <center>
+                            <table>
+                                <tr>
+                                    <td style="border: 2px solid black; border-radius: 10px; padding: 10px;">
+                                        <center>
+                                        <img src="./assets/912990487501557761_0.PNG" width="270px">
+                                        </center>
+                                    </td>
+                                    <td style="border: 2px solid black; border-radius: 10px; padding: 10px;">
+                                        <center>
+                                        <img src="./assets/910111384045854720_0.png" width="310px">
+                                        </center>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 2px solid black; border-radius: 10px; padding: 10px;">
+                                        <b>original</b>: @username: Tell us how you really feel! #OBX #hurricanemaria <span style="color: blue;"> not_humanitarian <span style="color: green;">✓</span></span> <br>
+                                        <b>insertions</b>: @username: Tell us how you really feel about the bold, yellow Outer Banks Motor Lodge sign! #OBX #hurricanemaria <span style="color: red;"> other_relevant_information <span style="color: red;">✗</span></span>
+                                    </td>
+                                    <td style="border: 2px solid black; border-radius: 10px; padding: 10px;">
+                                        <b>original</b>: .@username crews to return today after helping with Irma recovery in Georgia  #vt <span style="color: blue;"> rescue_volunteering_or_donation_effort <span style="color: green;">✓</span></span> <br>
+                                        <b>insertions</b>: .@username crews with their yellow and white trucks are set to return today after helping with Irma recovery in Georgia #vt <span style="color: red;"> infrastructure_and_utility_damage <span style="color: red;">✗</span></span>
                                     </td>
                                 </tr>
                             </table>
                         </center><br/>
-                        
-                        ... <br/><br/>
-                        
+                        <br/>
+
+						<span style="text-align: left;"><b>On introducing both dilutions and insertions: ...</b> </span>
                         <center>
                             <table>
                                 <tr>
                                     <td style="border: 2px solid black; border-radius: 10px; padding: 10px;">
                                         <center>
-                                        <img src="" width="270px">
+                                        <img src="./assets/930415579294584834_0.PNG" width="270px">
                                         </center>
                                     </td>
                                     <td style="border: 2px solid black; border-radius: 10px; padding: 10px;">
                                         <center>
-                                        <img src="" width="300px">
+                                        <img src="./assets/910111384045854720_0.png" width="310px">
                                         </center>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="border: 2px solid black; border-radius: 10px; padding: 10px;">
-                                        original: <span style="color: blue;">...<span style="color: green;">✓</span></span> <br>
-                                        modified: <span style="color: red;">...<span style="color: red;">✗</span></span>
+                                        <b>original</b>: Iran: Survivors struggle in aftermath of year's most deadly earthquake <span style="color: blue;"> affected_individuals <span style="color: green;">✓</span></span> <br>
+                                        <b>dilution + insertions</b>: Iran: Many survivors struggle in aftermath of year's most deadly earthquake. Amidst the grey rubble, communities across the region are coming together to show strength and solidarity. <span style="color: red;"> rescue_volunteering_or_donation_effort <span style="color: red;">✗</span></span>
                                     </td>
                                     <td style="border: 2px solid black; border-radius: 10px; padding: 10px;">
-                                        original: <span style="color: blue;">...(<em>neutral</em>) <span style="color: green;">✓</span></span> <br>
-                                        modified: <span style="color: red;">...<span style="color: red;">✗</span></span>
+                                        <b>original</b>: .@username crews to return today after helping with Irma recovery in Georgia  #vt <span style="color: blue;"> rescue_volunteering_or_donation_effort <span style="color: green;">✓</span></span> <br>
+                                        <b>dilution + insertions</b>: .@username crews with their yellow and white trucks are set to return today after helping with Irma recovery in Georgia #vt <span style="color: red;"> infrastructure_and_utility_damage <span style="color: red;">✗</span></span>
                                     </td>
                                 </tr>
                             </table>
@@ -384,7 +428,9 @@
 
 	<table align=center width=850px>
 		<center><h1>Related Papers on Multimodal Robustness</h1></center>
+		<center>
         <span style="font-size:11pt">The experiments and insights presented here are developed on top of our prior work.<br/> Please refer to the following papers and the associated resources for more details:</span><br/><br/>
+		</center>
         <tr>
             <td><img class="layered-paper-small" style="height:155px" src="./assets/acl2023.png"/></td>
 			<td><span style="font-size:11pt">
@@ -428,7 +474,7 @@
 		var table = document.getElementById("modelTable");
 		for (var i = 1, row; row = table.rows[i]; i++) {
 			// Iterate through rows, skip the first (header row)
-			for (var j = 2, col; col = row.cells[j]; j++) {
+			for (var j = 3, col; col = row.cells[j]; j++) {
 				// Iterate through columns, skip the first two
 				var value = parseInt(col.innerHTML, 10);
 				var color = getColorForPercentage(value);
