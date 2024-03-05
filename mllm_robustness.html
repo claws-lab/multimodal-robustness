@@ -162,14 +162,14 @@
 <head>
 	<title>MLLM Robustness</title>
 	<meta property="og:image" content="./assets/gpt4v.png"/> 
-	<meta property="og:title" content="Robustness of GPT-4V to Cross-Modal Insertions" />
-	<meta property="og:description" content="Title: Assessing the Robustness of Multimodal LLMs like GPT-4V, Gemini, LLaVA-1.5, to Cross-Modal Insertions. Authors: Gaurav Verma and Srijan Kumar; Affiliation: Georgia Institute of Technology" />
+	<meta property="og:title" content="Robustness of Multimodal Large Language Models Against Cross-Modal Insertions and Insertions" />
+	<meta property="og:description" content="Title: Assessing the Robustness of Multimodal LLMs like GPT-4V, Gemini, LLaVA-1.5, Against Cross-Modal Insertions and Dilutions. Authors: Gaurav Verma and Srijan Kumar; Affiliation: Georgia Institute of Technology" />
 </head>
 
 <body>
 	<br>
 	<center>
-		<span style="font-size:36px"><b>Assessing the Robustness of Multimodal LLMs Against<br/> Cross-Modal Dilutions and Insertions</b></span><br/><br/>
+		<span style="font-size:36px"><b>Are Multimodal LLMs Robust to Cross-Modal Variations?</b></span><br/><br/>
 		<span><a href="https://gaurav22verma.github.io/">Gaurav Verma</a> <em><span style="font-size: 10pt;">and</span></em> <a href="https://faculty.cc.gatech.edu/~srijan/">Srijan Kumar</a></span><br/>
 		<span style="font-size: 11pt;">Georgia Institute of Technology</span><br/>
 		<a href="https://www.cc.gatech.edu/"><img src="./assets/gt-logo.png" width=170px></a><br/><br/>
@@ -181,31 +181,17 @@
 			<tr>
 				<td width=260px>
 					<!-- <center> -->
-                        <center><h1>Summary (tl;dr)</h1></center>
-						<b>How robust are multimodal LLMs to realistic changes in multimodal data?</b> A simple way ...<br/><br/>
 
-						<b>On a multimodal classification task</b> – i.e., given an image and a textual description, GPT-4V's job is to predict if the correct classification label, ...<br/><br/>
-						
-						<b>Lastly</b>, ...<br/><br/>
-
-						<em>Continue reading for more details!</em>
-
-						<br/><br/>
-						<hr/>
-						
-						
-						<center><h1>Introduction and Takeaways</h1></center>
-						<b>Background</b>: ...<br/><br/>
+						<b>How robust are multimodal LLMs to realistic changes in multimodal data?</b> A simple way to do this is to evaluate how sensitive the predictions of a multimodal LLM are to <em>relevant</em> and <em>plausible</em> insertions or dilutions in the text. In multimodal settings (i.e., vision + language settings), one way to emulate relevant and plausible variations in the text is by doing cross-modal dilutions (<a>Verma et al., EMNLP 2022</a>) and insertions (<a>Ramshetty et al., ACL 2023</a>) – see Figure 1 below for examples. It is undesirable that a model's predictions change quite a few times on introducing these variations. Here, we will do this evaluation for 4 different types of multimodal LLMs (<a>GPT-4(V)</a>, <a>Gemini Pro</a>, <a>LLaVA-1.5</a>, and <a>moondream1</a>) while considering a simple 5-class classification task in a zero-shot setting. For reference, we also consider the robustness of a fully fine-tuned fusion-based multimodal model.<br/><br/>
 
 						<center>
                             <img src="./assets/dilution_insertion.png"  width="800">
-                            <div class="caption"><b>Figure 1</b>: Examples of cross-modal dilution and cross-modal insertion.</div><br/><br/>
+                            <div class="caption" style="font-size: 13px; color: #0e515d;"><b>Figure 1</b>: Examples of cross-modal dilution and cross-modal insertion. Introducing variations in the text by relying on the information in the corresponding image modality (i.e., cross-modal grounding) ensures that the variations are realistic. The outputs for original and modified multimodal inputs should be the same. </div><br/>
                         </center>
 
+						<b>The classification task is</b> a simple one, with a practical Social Good use-case in mind and involves inference on user-generated data: given a social media post during crisis that comprises and image and text, categorize it into one of the following classes to help determine what kind of humanitarian aid is needed, if at all it is needed: <i>rescue_volunteering_or_donation_effort</i>, <i>infrastructure_and_utility_damage</i>, <i>affected_individuals</i>, <i>other_relevant_information</i> and <i>not_humanitarian</i>. We supply the MLLMs with the definition of these categories. Given the nature of user-generated data on social platforms, making an inference based on both the modalities is important. For this multimodal classification task, the model's job is to predict the correct classification label given an image and a textual description.<br/><br/>
 
-                        <b>The question</b>: ... <br/><br/>
-
-						<b>Takeaways</b>: ... <br/><br/>
+						<b>We find that</b> the propreitary MLLMs like GPT-4(V) and Gemini Pro demonstrate pretty good robustness, with the latter being slightly more robust. Their robustness is way better than that of a fully fine-tuned fusion-based multimodal model, which is impressive. However, the zero-shot classification abilities of these models is subpar to the fusion-based multimodal classifier. This is interesting to note because while MLLMs achieve subpar zero-shot classification performance, their robustness is notably better. However, these benefits of better robustness are not reflected in  LLaVA-1.5, a leading open-source MLLM. LLaVA-1.5 achieves notably lower classification performance while also doing worse on robustness in  comparison to a fusion-based classifier. Check the following table for complete results.<br/><br/>
 
 
 						<center>
@@ -300,13 +286,31 @@
 
 								<!-- Add more rows here -->
 							</table>
-						</center><br/><br/>			
+								<div id="caption" style="font-size: 13px; color: #0e515d;"><em><b>Results Table</b>: The table shows the classification performance (macro F1 score) of the models on the original data, and the percentage change in performance due to dilution, insertion, and dilution + insertion. The failure rate is the percentage of instances where the model refuses to answer or answers in an unparsable format. The last column contains the results for all the classes. Click on view image to see the expanded set of results in a different tab. </em></div> <br/><br/>
+						</center><br/>
 
-						<hr/><br/><br/>
+						<b>Lastly</b>, it is worth emphasizing that while the robustness of propreitary MLLM-based zero-shot classifiers is pretty good in comparison to the fusion-based mutimodal classifier, there is work that needs to be done to achieve robustness that affords a "<a href="https://en.wikipedia.org/wiki/High_availability">three 9s</a>"-level of robustness in multimodal systems.<br/><br/>
+
+						<em>Continue reading for more technical details...<br/> and ... stay tuned for more multimodal tasks and model variants (like fine-tuned MLLMs)!</em>
+
+						<br/><br/>
+						<hr/>
+						
+						
+						<center><h1>Introduction and Takeaways</h1></center>
+						<b>Background</b>: ...<br/><br/>
+
+
+                        <b>The question</b>: ... <br/><br/>
+
+						<b>Takeaways</b>: ... <br/><br/>
+		
+
+						<hr/><br/>
 
                         <center><h2>What kind of cross-modal dilutions confuse multimodal LLMs?</h2></center>
 
-						GPT-4(V) seems to be the best MLLM -- the zero-shot performance is 0.67, which is pretty close to that of a fine-tuned multimodal fusion model (0.73). Additionally, the failure rate, and changes in performance due to dilution, insertion, and dilution + insertion are also quite low for GPT-4(V). Let us look at the instances where GPT-4(V) makes an incorrect prediction.<br/><br/>
+						GPT-4(V) seems to be the best MLLM -- the zero-shot performance is 0.67, which is pretty close to that of a fine-tuned multimodal fusion model (0.75). Additionally, the failure rate, and changes in performance due to dilution, insertion, and dilution + insertion are also quite low for GPT-4(V). Let us look at the instances where GPT-4(V) makes an incorrect prediction after the variations in text are introduced.<br/><br/>
                         
                         
 						
@@ -380,18 +384,18 @@
                                     </td>
                                     <td style="border: 2px solid black; border-radius: 10px; padding: 10px;">
                                         <center>
-                                        <img src="./assets/910111384045854720_0.png" width="310px">
+                                        <img src="./assets/904830090386735105_0.png" width="220px">
                                         </center>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="border: 2px solid black; border-radius: 10px; padding: 10px;">
-                                        <b>original</b>: Iran: Survivors struggle in aftermath of year's most deadly earthquake <span style="color: blue;"> affected_individuals <span style="color: green;">✓</span></span> <br>
+                                        <b>original</b>: Iran: Survivors struggle in aftermath of year's most deadly earthquake <span style="color: blue;"> infrastructure_and_utility_damage <span style="color: green;">✓</span></span> <br>
                                         <b>dilution + insertions</b>: Iran: Many survivors struggle in aftermath of year's most deadly earthquake. Amidst the grey rubble, communities across the region are coming together to show strength and solidarity. <span style="color: red;"> rescue_volunteering_or_donation_effort <span style="color: red;">✗</span></span>
                                     </td>
                                     <td style="border: 2px solid black; border-radius: 10px; padding: 10px;">
-                                        <b>original</b>: .@username crews to return today after helping with Irma recovery in Georgia  #vt <span style="color: blue;"> rescue_volunteering_or_donation_effort <span style="color: green;">✓</span></span> <br>
-                                        <b>dilution + insertions</b>: .@username crews with their yellow and white trucks are set to return today after helping with Irma recovery in Georgia #vt <span style="color: red;"> infrastructure_and_utility_damage <span style="color: red;">✗</span></span>
+                                        <b>original</b>: The effects of Harvey... <span style="color: blue;"> infrastructure_and_utility_damage <span style="color: green;">✓</span></span> <br>
+                                        <b>dilution + insertions</b>: The effects of Harvey... remain visible in the debris scattered across neighborhoods in these images. Piles of personal belongings, now converted to trash, line the streets as a testament to the disaster's reach. <span style="color: red;"> other_relevant_information <span style="color: red;">✗</span></span>
                                     </td>
                                 </tr>
                             </table>
