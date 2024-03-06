@@ -175,6 +175,18 @@
 		<a href="https://www.cc.gatech.edu/"><img src="./assets/gt-logo.png" width=170px></a><br/><br/>
 	</center>
 
+	<!-- table of contents -->
+	<div style="padding-left: 120px;">
+			<h1>Here's what we are going to covering:</h1>
+			<ol>
+				<li><a href="#summary">Summary</a> <span style="font-size: 15px;"><i>– tell us what you did and what you found!</i></span></li>
+				<li><a href="#tech-details">Technical Details</a> <span style="font-size: 15px;"><i>–  show us the prompts!</i></span></li>
+				<li><a href="#confusing-examples">What kind of cross-modal variations confuse GPT-4(V)?</a> <span style="font-size: 15px;"><i>– can we see some qualitative examples?</i></span></li>
+				<li><a href="#resources">Resources</a> <span style="font-size: 15px;"><i>– can you share the code?</i></span></li>
+				<li><a href="#related-work">Related papers</a> <span style="font-size: 15px;"><i>– can we read some related papers?</i></span></li>
+			</ol>
+	</div>
+
 	<hr>
 	<center>
 		<table align=center width=850px>
@@ -182,7 +194,7 @@
 				<td width=260px>
 					<!-- <center> -->
 
-						<center><h1>Summary</h1></center>
+						<center><h1 id="summary">Summary</h1></center>
 
 						<b>How robust are multimodal LLMs to realistic changes in multimodal data?</b> A simple way to do this is to evaluate how sensitive the predictions of a multimodal LLM are to <em>relevant</em> and <em>plausible</em> insertions or dilutions in the text. In multimodal settings (i.e., vision + language settings), one way to emulate relevant and plausible variations in the text is by doing cross-modal dilutions (<a>Verma et al., EMNLP 2022</a>) and insertions (<a>Ramshetty et al., ACL 2023</a>) – see Figure 1 below for examples. It is undesirable that a model's predictions change quite a few times on introducing these variations. Here, we will do this evaluation for 4 different types of multimodal LLMs (<a>GPT-4(V)</a>, <a>Gemini Pro</a>, <a>LLaVA-1.5</a>, and <a>moondream1</a>) while considering a simple 5-class classification task in a zero-shot setting. For reference, we also consider the robustness of a fully fine-tuned fusion-based multimodal model.<br/><br/>
 
@@ -313,7 +325,7 @@
 						<hr/>
 						
 						
-						<center><h1>Technical Details</h1></center>
+						<center><h1 id="tech-details">Technical Details</h1></center>
 						<b>The classification task</b> is to categorize the Twitter images + post in the <a href="https://crisisnlp.qcri.org/crisismmd">CrisisMMD</a> dataset. We use the standard train/dev/test splits – note that teh train and dev splits are only useful for training the fusion-based multimodal classifier. Since every other LLM-based model is used in a zero-shot setting, we only need the test set for them. The multimodal fusion model involves concatenating the modality-specific representations of fine-tuned unimodal classifiers (DistilBERT for text and VFF-16 for image) and fusing them by learning a multilayer perceptron (MLP) with 3 hidden layers. For the multimodal LLMs, we use the following prompt. A couple of things that are worth noticing in the prompt below: we randomly shuffle the labels in the labels_string to avoid any position bias, and supply the <a href="./assets/label_definition.txt" target="_blank">definitions of the labels</a>.<br/><br/>
 						<div style="padding-left: 20px;">
 							<code style="color: purple;">
@@ -364,7 +376,7 @@
 
 						<hr/>
 
-                        <center><h1>What kind of cross-modal variations confuse GPT-4(V)?</h1></center>
+                        <center><h1 id="confusing-examples">What kind of cross-modal variations confuse GPT-4(V)?</h1></center>
 
 						GPT-4(V) seems to be the best MLLM -- the zero-shot performance is 0.67, which is pretty close to that of a fine-tuned multimodal fusion model (0.75). Additionally, the failure rate, and changes in performance due to dilution, insertion, and dilution + insertion are also quite low for GPT-4(V). Let us look at the instances where GPT-4(V) makes an incorrect prediction after the variations in text are introduced.<br/><br/>
                         
@@ -469,7 +481,7 @@
 	</center>
 
 	<table align=center width=850px>
-		<center><h1>Resources</h1></center>
+		<center><h1 id="resources">Resources</h1></center>
 		<tr>
 			<td>
 				<b>Data</b>: You can download the CrisisMMD dataset <a href="https://crisisnlp.qcri.org/crisismmd" target="_blank">here</a>. We use the standard train/dev/test split.<br/>
@@ -481,7 +493,7 @@
 	<hr>
 
 	<table align=center width=850px>
-		<center><h1>Related Papers on Multimodal Robustness</h1></center>
+		<center><h1 id="related-work">Related Papers on Multimodal Robustness</h1></center>
 		<center>
         <span style="font-size:11pt">The experiments and insights presented here are developed on top of our prior work.<br/> Please refer to the following papers and the associated resources for more details:</span><br/><br/>
 		</center>
@@ -510,16 +522,6 @@
 	<br>
 	<hr>
 	<br>
-
-	<table align=center width=600px>
-		<tr>
-			<td width=400px>
-				<center>
-					<span style="font-size: 8pt;">The template was originally made by <a href="http://web.mit.edu/phillipi/">Phillip Isola</a> and <a href="http://richzhang.github.io/">Richard Zhang</a>; the code can be found <a href="https://github.com/richzhang/webpage-template">here</a>.</span>
-				</center>
-			</td>
-		</tr>
-	</table>
 
 <br>
 
