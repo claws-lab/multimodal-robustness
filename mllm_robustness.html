@@ -182,6 +182,8 @@
 				<td width=260px>
 					<!-- <center> -->
 
+						<center><h1>Summary</h1></center>
+
 						<b>How robust are multimodal LLMs to realistic changes in multimodal data?</b> A simple way to do this is to evaluate how sensitive the predictions of a multimodal LLM are to <em>relevant</em> and <em>plausible</em> insertions or dilutions in the text. In multimodal settings (i.e., vision + language settings), one way to emulate relevant and plausible variations in the text is by doing cross-modal dilutions (<a>Verma et al., EMNLP 2022</a>) and insertions (<a>Ramshetty et al., ACL 2023</a>) – see Figure 1 below for examples. It is undesirable that a model's predictions change quite a few times on introducing these variations. Here, we will do this evaluation for 4 different types of multimodal LLMs (<a>GPT-4(V)</a>, <a>Gemini Pro</a>, <a>LLaVA-1.5</a>, and <a>moondream1</a>) while considering a simple 5-class classification task in a zero-shot setting. For reference, we also consider the robustness of a fully fine-tuned fusion-based multimodal model.<br/><br/>
 
 						<center>
@@ -229,6 +231,20 @@
 									<td>
 										<a href="./assets/humanitarian_mm_fusion.png" target="_blank" class="img-link">View Image</a>
 										<div class="img-preview"><img src="./assets/humanitarian_mm_fusion.png" style="width: 100px;"></div>
+									</td>
+								</tr>
+
+
+								<tr>
+									<td>Claude 3 Opus</td>
+									<td>0.67</td>
+									<td>0.00 %</td>
+									<td>-00.00 %</td>
+									<td>-00.00 %</td>
+									<td>-00.00 %</td>
+									<td>
+										<a href="./assets/humanitarian_claude3opus.png" target="_blank" class="img-link">View Image</a>
+										<div class="img-preview"><img src="./assets/humanitarian_claude3opus.png" style="width: 100px;"></div>
 									</td>
 								</tr>
 
@@ -286,29 +302,69 @@
 
 								<!-- Add more rows here -->
 							</table>
-								<div id="caption" style="font-size: 13px; color: #0e515d;"><em><b>Results Table</b>: The table shows the classification performance (macro F1 score) of the models on the original data, and the percentage change in performance due to dilution, insertion, and dilution + insertion. The failure rate is the percentage of instances where the model refuses to answer or answers in an unparsable format. The last column contains the results for all the classes. Click on view image to see the expanded set of results in a different tab. </em></div> <br/><br/>
+								<div id="caption" style="font-size: 13px; color: #0e515d;"><em><b>Results Table</b>: The table shows the classification performance (macro F1 score) of the models on the original data, and the percentage change in performance due to dilution, insertion, and dilution + insertion. The failure rate is the percentage of instances where the model refuses to answer or answers in an unparsable format. The last column contains the results for all the classes. Click on view image to see the expanded set of results in a different tab. </em></div> <br/>
 						</center><br/>
 
 						<b>Lastly</b>, it is worth emphasizing that while the robustness of propreitary MLLM-based zero-shot classifiers is pretty good in comparison to the fusion-based mutimodal classifier, there is work that needs to be done to achieve robustness that affords a "<a href="https://en.wikipedia.org/wiki/High_availability">three 9s</a>"-level of robustness in multimodal systems.<br/><br/>
 
-						<em>Continue reading for more technical details...<br/> and ... stay tuned for more multimodal tasks and model variants (like fine-tuned MLLMs)!</em>
+						<em>Continue reading for more technical details and qualitative examples of instances for which GPT-4(V) falters...<br/> and ... stay tuned for more multimodal tasks and model variants (like fine-tuned MLLMs)!</em>
 
 						<br/><br/>
 						<hr/>
 						
 						
-						<center><h1>Introduction and Takeaways</h1></center>
-						<b>Background</b>: ...<br/><br/>
+						<center><h1>Technical Details</h1></center>
+						<b>The classification task</b> is to categorize the Twitter images + post in the <a href="https://crisisnlp.qcri.org/crisismmd">CrisisMMD</a> dataset. We use the standard train/dev/test splits – note that teh train and dev splits are only useful for training the fusion-based multimodal classifier. Since every other LLM-based model is used in a zero-shot setting, we only need the test set for them. The multimodal fusion model involves concatenating the modality-specific representations of fine-tuned unimodal classifiers (DistilBERT for text and VFF-16 for image) and fusing them by learning a multilayer perceptron (MLP) with 3 hidden layers. For the multimodal LLMs, we use the following prompt. A couple of things that are worth noticing in the prompt below: we randomly shuffle the labels in the labels_string to avoid any position bias, and supply the <a href="./assets/label_definition.txt" target="_blank">definitions of the labels</a>.<br/><br/>
+						<div style="padding-left: 20px;">
+							<code style="color: purple;">
+								Given the image and the accompanying textual description, assign one of the five labels based on the information conveyed jointly by the image and the text: {labels_string}. The definitions of the labels are provided below.<br/><br/>
+								{labels_random[0]}: {labels_definitions[labels_random[0]]}<br/>
+								{labels_random[1]}: {labels_definitions[labels_random[1]]}<br/>
+								{labels_random[2]}: {labels_definitions[labels_random[2]]}<br/>
+								{labels_random[3]}: {labels_definitions[labels_random[3]]}<br/>
+								{labels_random[4]}: {labels_definitions[labels_random[4]]}<br/><br/>
+								
+								You must respond only with one of the following strings: {labels_string}, and nothing else.<br/><br/>
+								
+								Textual description: {text}<br/>
+								Label:
+							</code><br/>
+						</div>
+						<br/>
 
 
-                        <b>The question</b>: ... <br/><br/>
+                        <b>Experimental setup for testing robustness</b>: So, sure, the above describes how the models classify. But since the primary aim is to test their robust to dilutions and insertions, we need variants of original <code style="color: purple;">{text}</code> above that include these dilutions and insertions. We rely on prompting GPT-4(V) to generate these variants. Here's how we prompt the GPT-4(V) model to introduce these variations: <br/><br/>
 
-						<b>Takeaways</b>: ... <br/><br/>
-		
+						<div style="padding-left: 20px;">
+							<i>Introducing dilutions:</i><br/>
+							<code style="color: purple;">
+								Given the image and the accompanying textual description, generate new text that follows the following constraints: the new text (i) should be relevant to the given image, (ii) should be relevant to the provided textual descriptiton, and (iii), when appended to the textual description, the combined text should be fluent and natural. The goal of generating the new text is to dilute the information conveyed by the image and text data, under realistic settings of relevancy and fluency. Generate about 2 sentences as new text.<br/><br/>
+								
+								Textual description: {text}<br/>
+								New Text:
+							</code><br/><br/>
 
-						<hr/><br/>
+							<i>Introducing insertions:</i><br/>
+							<code style="color: purple;">
+								You are an agent that inserts new words into the provided textual description while ensuring that the inserted words are strictly related to the attributes of objects in the provided image. The attributes could include properties like color, shape, size, etc. The inserted attributes should be included without modifying the content of the original textual description. Only insert the attributes that you are confident about based on the image and textual description. Output the new text that includes the inserted attributes. It is important that you do not add new sentences and only insert words in the original textual description.<br/><br/>
+								
+								Textual description: {text}<br/>
+								New Text:
+							</code><br/><br/>
 
-                        <center><h2>What kind of cross-modal dilutions confuse multimodal LLMs?</h2></center>
+							<i>Introducing dilutions + insertions:</i> For this, we combine the dilution generated by GPT-4(V) with the original text and then prompt the model to introduce insertions using the same prompt as the one above to introduce insertions in the original + dilution text.<br/><br/>
+				
+						</div>
+						Once we have these dilutions, insertions, and dilutions + insertions, we plug them in place of <code style="color: purple;">{text}</code> in the classification prompt and evaluate the models on the new data. Evaluation involves quantifying the performance of the model on the original data, for which we use macro-averaged F1 scores. We also quantify the failure rate, which is the percentage of instances where the model refuses to answer or answers in an unparsable format. And most importantly, we quantify the percentage change in macro F1 due to dilution, insertion, and dilution + insertion. <br/><br/>
+						
+
+						Now, certainly, it is important to <b>check whether GPT-4(V) generates good dilutions and insertions</b> – can we rely on these generations for our robustness assessments? We did some qualitative checks and consider them to be really good. Here's the <a href="" target="_blank">complete CSV</a> that shows the original text, and the generated dilution, insertion, and dilution + insertion; take a look! As a side note, we have proposed our own approaches to generate these dilutions and insertions while ensuring cross-modal grounding, and human evaluations suggest that these automated variations are indeed realistic. <br/><br/>
+						
+						<br/>
+
+						<hr/>
+
+                        <center><h1>What kind of cross-modal variations confuse GPT-4(V)?</h1></center>
 
 						GPT-4(V) seems to be the best MLLM -- the zero-shot performance is 0.67, which is pretty close to that of a fine-tuned multimodal fusion model (0.75). Additionally, the failure rate, and changes in performance due to dilution, insertion, and dilution + insertion are also quite low for GPT-4(V). Let us look at the instances where GPT-4(V) makes an incorrect prediction after the variations in text are introduced.<br/><br/>
                         
@@ -373,7 +429,7 @@
                         </center><br/>
                         <br/>
 
-						<span style="text-align: left;"><b>On introducing both dilutions and insertions: ...</b> </span>
+						<span style="text-align: left;"><b>On introducing both dilutions and insertions:</b> Similar to the examples above, the GPT-4(V) predictions change incorrectly after the changes have been introduced in the text. At an aggregate level, given that dilutions lead to a drop in performance while insertions boost the performance, it seems that the drop in introducing dilutions + insertions could be largely attributed to the dilutions. The example on the right below illustrates this.</span>
                         <center>
                             <table>
                                 <tr>
@@ -413,17 +469,11 @@
 	</center>
 
 	<table align=center width=850px>
-		<center><h1>Methodology and Resources</h1></center>
+		<center><h1>Resources</h1></center>
 		<tr>
 			<td>
-				<b>Data</b>: ...<br/><br/>
-                
-                <b>Prompt</b>: ...<br/><br/>
-                <code style="color: purple;">
-					...
-				</code><br/>
-
-                <b>Resources</b>: ... <a href="">GitHub repository</a>. Please feel free to reach out to us if you have any questions or comments.<br/><br/>
+				<b>Data</b>: You can download the CrisisMMD dataset <a href="https://crisisnlp.qcri.org/crisismmd" target="_blank">here</a>. We use the standard train/dev/test split.<br/>
+                <b>Code</b>: All the code resides in this <a href="">GitHub repository</a>. This includes the code for generating dilutions and insertions using GPT-4(V) and evaluating the multimodal LLMs. We also release the code for training the fusion-based multimodal classifier. <br/>Please feel free to reach out to us if you have any questions or comments.<br/><br/>
 			</td>
 		</tr>
 	</table>

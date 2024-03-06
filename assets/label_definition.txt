@@ -1,0 +1,8 @@
+labels_definitions ={
+        'not_humanitarian': 'does not depict any information relevant to humanitarian aid.',
+        'other_relevant_information': 'does not belong to any of the above categories, but it still depicts important information useful for humanitarian aid.',
+        'rescue_volunteering_or_donation_effort': 'depicts any type of rescue, volunteering, or donation effort such as people being transported to safe places, people being evacuated from the hazardous area, people receiving medical aid or food, people in shelter facilities donation of money, blood, or services etc.',
+        'infrastructure_and_utility_damage': 'depicts any built structure or vehicle affected or damaged by earthquake, fire, heavy rain, floods, strong winds, gusts, etc. such as damaged houses, roads, buildings; flooded houses, streets, highways; blocked roads, bridges, pathways; collapsed bridges, power lines, communication poles, etc., or damaged vehicle such as cars, trucks, buses, motorcycles, boats, ships, trams, trains, etc.',
+        'affected_individuals': 'depicts people affected by the disaster event such as injured or dead people; people standing in queues to receive aid; people in need of shelter facilities, etc.'
+
+    }
