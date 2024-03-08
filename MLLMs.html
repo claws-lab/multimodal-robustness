@@ -196,7 +196,7 @@
 
 						<center><h1 id="summary">Summary</h1></center>
 
-						<b>How robust are multimodal LLMs to realistic changes in multimodal data?</b> A simple way to do this is to evaluate how sensitive the predictions of a multimodal LLM are to <em>relevant</em> and <em>plausible</em> insertions or dilutions in the text. In multimodal settings (i.e., vision + language settings), one way to emulate relevant and plausible variations in the text is by doing cross-modal dilutions (<a>Verma et al., EMNLP 2022</a>) and insertions (<a>Ramshetty et al., ACL 2023</a>) – see Figure 1 below for examples. It is undesirable that a model's predictions change quite a few times on introducing these variations. Here, we will do this evaluation for 4 different types of multimodal LLMs (<a>GPT-4(V)</a>, <a>Gemini Pro</a>, <a>LLaVA-1.5</a>, and <a>moondream1</a>) while considering a simple 5-class classification task in a zero-shot setting. For reference, we also consider the robustness of a fully fine-tuned fusion-based multimodal model.<br/><br/>
+						<b>How robust are multimodal LLMs to realistic changes in multimodal data?</b> A simple way to do this is to evaluate how sensitive the predictions of a multimodal LLM are to <em>relevant</em> and <em>plausible</em> insertions or dilutions in the text. In multimodal settings (i.e., vision + language settings), one way to emulate relevant and plausible variations in the text is by doing cross-modal dilutions (<a href="https://arxiv.org/abs/2211.02646" target="_blank">Verma et al., EMNLP 2022</a>) and insertions (<a href="https://arxiv.org/abs/2306.11065" target="_blank">Ramshetty et al., ACL 2023</a>) – see Figure 1 below for examples. It is undesirable that a model's predictions change quite a few times on introducing these variations. Here, we will do this evaluation for 4 different types of multimodal LLMs (GPT-4(V), Claude-3, Gemini Pro, LLaVA-1.5, and moondream1) while considering a simple 5-class classification task in a zero-shot setting. For reference, we also consider the robustness of a fully fine-tuned fusion-based multimodal model.<br/><br/>
 
 						<center>
                             <img src="./assets/dilution_insertion.png"  width="800">
@@ -247,7 +247,7 @@
 								</tr>
 
 
-								<tr>
+								<!-- <tr>
 									<td>Claude 3 Opus</td>
 									<td>0.67</td>
 									<td>0.00 %</td>
@@ -258,7 +258,7 @@
 										<a href="./assets/humanitarian_claude3opus.png" target="_blank" class="img-link">View Image</a>
 										<div class="img-preview"><img src="./assets/humanitarian_claude3opus.png" style="width: 100px;"></div>
 									</td>
-								</tr>
+								</tr> -->
 
 								<tr>
 									<td>GPT-4(V)</td>
@@ -326,7 +326,7 @@
 						
 						
 						<center><h1 id="tech-details">Technical Details</h1></center>
-						<b>The classification task</b> is to categorize the Twitter images + post in the <a href="https://crisisnlp.qcri.org/crisismmd">CrisisMMD</a> dataset. We use the standard train/dev/test splits – note that teh train and dev splits are only useful for training the fusion-based multimodal classifier. Since every other LLM-based model is used in a zero-shot setting, we only need the test set for them. The multimodal fusion model involves concatenating the modality-specific representations of fine-tuned unimodal classifiers (DistilBERT for text and VFF-16 for image) and fusing them by learning a multilayer perceptron (MLP) with 3 hidden layers. For the multimodal LLMs, we use the following prompt. A couple of things that are worth noticing in the prompt below: we randomly shuffle the labels in the labels_string to avoid any position bias, and supply the <a href="./assets/label_definition.txt" target="_blank">definitions of the labels</a>.<br/><br/>
+						<b>The classification task</b> is to categorize the Twitter images + post in the <a href="https://crisisnlp.qcri.org/crisismmd">CrisisMMD</a> dataset. We use the standard train/dev/test splits – note that teh train and dev splits are only useful for training the fusion-based multimodal classifier. Since every other LLM-based model is used in a zero-shot setting, we only need the test set for them. The multimodal fusion model involves concatenating the modality-specific representations of fine-tuned unimodal classifiers (DistilBERT for text and VFF-16 for image) and fusing them by learning a multilayer perceptron (MLP) with 3 hidden layers. For the multimodal LLMs, we use the following prompt. A couple of things that are worth noticing in the prompt below: we randomly shuffle the labels in the labels_string to avoid any position bias, and supply the <a href="./assets/label_definition.txt" target="_blank">definitions of the labels</a>. We do not introduce model-specific modifications to the prompt.<br/><br/>
 						<div style="padding-left: 20px;">
 							<code style="color: purple;">
 								Given the image and the accompanying textual description, assign one of the five labels based on the information conveyed jointly by the image and the text: {labels_string}. The definitions of the labels are provided below.<br/><br/>
@@ -370,7 +370,7 @@
 						Once we have these dilutions, insertions, and dilutions + insertions, we plug them in place of <code style="color: purple;">{text}</code> in the classification prompt and evaluate the models on the new data. Evaluation involves quantifying the performance of the model on the original data, for which we use macro-averaged F1 scores. We also quantify the failure rate, which is the percentage of instances where the model refuses to answer or answers in an unparsable format. And most importantly, we quantify the percentage change in macro F1 due to dilution, insertion, and dilution + insertion. <br/><br/>
 						
 
-						Now, certainly, it is important to <b>check whether GPT-4(V) generates good dilutions and insertions</b> – can we rely on these generations for our robustness assessments? We did some qualitative checks and consider them to be really good. Here's the <a href="" target="_blank">complete CSV</a> that shows the original text, and the generated dilution, insertion, and dilution + insertion; take a look! As a side note, we have proposed our own approaches to generate these dilutions and insertions while ensuring cross-modal grounding, and human evaluations suggest that these automated variations are indeed realistic. <br/><br/>
+						Now, certainly, it is important to <b>check whether GPT-4(V) generates good dilutions and insertions</b> – can we rely on these generations for our robustness assessments? We did some qualitative checks and consider them to be really good. Here's the <a href="https://github.com/claws-lab/MLLM-robustness/blob/main/data/generated_dilutions_insertions.tsv" target="_blank">complete TSV</a> that shows the original text, and the generated dilution, insertion, and dilution + insertion; take a look! As a side note, we have proposed our own approaches to generate these dilutions and insertions while ensuring cross-modal grounding, and human evaluations suggest that these automated variations are indeed realistic. <br/><br/>
 						
 						<br/>
 
@@ -485,7 +485,7 @@
 		<tr>
 			<td>
 				<b>Data</b>: You can download the CrisisMMD dataset <a href="https://crisisnlp.qcri.org/crisismmd" target="_blank">here</a>. We use the standard train/dev/test split.<br/>
-                <b>Code</b>: All the code resides in this <a href="">GitHub repository</a>. This includes the code for generating dilutions and insertions using GPT-4(V) and evaluating the multimodal LLMs. We also release the code for training the fusion-based multimodal classifier. <br/>Please feel free to reach out to us if you have any questions or comments.<br/><br/>
+                <b>Code</b>: All the code resides in this <a href="https://github.com/claws-lab/MLLM-robustness">GitHub repository</a>. This includes the code for generating dilutions and insertions using GPT-4(V) and evaluating the multimodal LLMs. The code for training the fusion-based multimodal classifier si also available. Finally, the generated dilutions and insertions are available in <a href="https://github.com/claws-lab/MLLM-robustness/blob/main/data/generated_dilutions_insertions.tsv" target="_blank">this TSV</a>. <br/>Please feel free to reach out to us if you have any questions or comments.<br/><br/>
 
 				We ran the generation and inference experiments with GPT-4(V) in the second half of January 2024. The inference experiments with Gemini Pro were done in February 2024. The inference experiments with Claude 3 Opus were done in March 2024.
 			</td>
