@@ -192,20 +192,24 @@
 		<table align=center width=850px>
 			<tr>
 				<td width=260px>
+
+					<b>Multimodal Large Language Models (MLLMs)</b> allow language-based reasoning over other modalities, which is predominantly images right now but will very soon include videos and even <a href="https://arxiv.org/abs/2309.16058" target="_blank">sensor data</a>. Recently, there has been a lot of interest in understanding the robustness of LLMs–the major backbone of multimodal LLMs–to variations in the input data – ranging from unintended changes (<a href="https://arxiv.org/abs/2310.11324" target="_blank">Sclar et al., 2023</a>) to adversarial ones (<a href="https://arxiv.org/abs/2307.15043" target="_blank">Zou et al., 2023</a>). In the same spirit, we conduct robustness evaluations on the zero-shot capabilities of multimodal LLMs to plausible changes in the input text.<br/>
+					
+					<hr/>
 					<!-- <center> -->
 
 						<center><h1 id="summary">Summary</h1></center>
 
-						<b>How robust are multimodal LLMs to realistic changes in multimodal data?</b> A simple way to do this is to evaluate how sensitive the predictions of a multimodal LLM are to <em>relevant</em> and <em>plausible</em> insertions or dilutions in the text. In multimodal settings (i.e., vision + language settings), one way to emulate relevant and plausible variations in the text is by doing cross-modal dilutions (<a href="https://arxiv.org/abs/2211.02646" target="_blank">Verma et al., EMNLP 2022</a>) and insertions (<a href="https://arxiv.org/abs/2306.11065" target="_blank">Ramshetty et al., ACL 2023</a>) – see Figure 1 below for examples. It is undesirable that a model's predictions change quite a few times on introducing these variations. Here, we will do this evaluation for 4 different types of multimodal LLMs (GPT-4(V), Claude-3, Gemini Pro, LLaVA-1.5, and moondream1) while considering a simple 5-class classification task in a zero-shot setting. For reference, we also consider the robustness of a fully fine-tuned fusion-based multimodal model.<br/><br/>
+						<b>How robust are multimodal LLMs to realistic changes in multimodal data?</b> A simple way to do this is to evaluate how sensitive the predictions of a multimodal LLM are to <em>relevant</em> and <em>plausible</em> insertions or dilutions in the text. In multimodal settings (i.e., vision + language settings), one way to emulate relevant and plausible variations in the text is by doing cross-modal dilutions (<a href="https://arxiv.org/abs/2211.02646" target="_blank">Verma et al., EMNLP 2022</a>) and insertions (<a href="https://arxiv.org/abs/2306.11065" target="_blank">Ramshetty et al., ACL 2023</a>) – see Figure 1 below for examples. It is undesirable that a model's predictions change quite a few times on introducing these variations. Here, we will do this evaluation for 5 different types of multimodal LLMs (GPT-4(V), Claude-3, Gemini Pro, LLaVA-1.5, and moondream1) while considering a simple 5-class classification task in a zero-shot setting. For reference, we also consider the robustness of a fully fine-tuned fusion-based multimodal model.<br/><br/>
 
 						<center>
                             <img src="./assets/dilution_insertion.png"  width="800">
                             <div class="caption" style="font-size: 13px; color: #0e515d;"><b>Figure 1</b>: Examples of cross-modal dilution and cross-modal insertion. Introducing variations in the text by relying on the information in the corresponding image modality (i.e., cross-modal grounding) ensures that the variations are realistic. The outputs for original and modified multimodal inputs should be the same. </div><br/>
                         </center>
 
-						<b>The classification task is</b> a simple one, with a practical Social Good use-case in mind and involves inference on user-generated data: given a social media post during crisis that comprises and image and text, categorize it into one of the following classes to help determine what kind of humanitarian aid is needed, if at all it is needed: <i>rescue_volunteering_or_donation_effort</i>, <i>infrastructure_and_utility_damage</i>, <i>affected_individuals</i>, <i>other_relevant_information</i> and <i>not_humanitarian</i>. We supply the MLLMs with the definition of these categories. Given the nature of user-generated data on social platforms, making an inference based on both the modalities is important. For this multimodal classification task, the model's job is to predict the correct classification label given an image and a textual description.<br/><br/>
+						<b>The classification task is</b> a simple one, with a practical Social Good use-case in mind and involves inference on user-generated data: given a social media post during crisis that comprises and image and text, categorize it into one of the following classes to help determine what kind of humanitarian aid is needed, if at all it is needed: <i>rescue_volunteering_or_donation_effort</i>, <i>infrastructure_and_utility_damage</i>, <i>affected_individuals</i>, <i>other_relevant_information</i> and <i>not_humanitarian</i>. We supply the MLLMs with the definition of these categories. Given the nature of user-generated data on social platforms, making an inference based on both the modalities is important. For this multimodal task, the model's job is to predict the correct classification label given an image and a textual description.<br/><br/>
 
-						<b>We find that</b> the propreitary MLLMs like GPT-4(V) and Gemini Pro demonstrate pretty good robustness, with the latter being slightly more robust. Their robustness is way better than that of a fully fine-tuned fusion-based multimodal model, which is impressive. However, the zero-shot classification abilities of these models is subpar to the fusion-based multimodal classifier. This is interesting to note because while MLLMs achieve subpar zero-shot classification performance, their robustness is notably better. However, these benefits of better robustness are not reflected in  LLaVA-1.5, a leading open-source MLLM. LLaVA-1.5 achieves notably lower classification performance while also doing worse on robustness in  comparison to a fusion-based classifier. Check the following table for complete results.<br/><br/>
+						<b>We find that</b> propreitary MLLMs like GPT-4(V), Claude 3 Opus, and Gemini Pro demonstrate pretty good robustness, with the latter two being slightly more robust than GPT-4(V). The robustness of propreitary MLLMs is way better than that of a fully fine-tuned fusion-based multimodal model, which is impressive. With regard to the dependence on the type of variations, we notice that: <i>(a)</i> dilutions almost always hurt performance, <i>(b)</i> while insertions improve the results, which could hint at a good data augmentation strategy for enabling more accurate fine-tuning, and <i>(c)</i> a combination of dilution and insertion hurts the MLLM performance, which we believe is largely driven by the effect of dilution. However, the zero-shot classification abilities of these models is subpar to the fusion-based multimodal classifier. This brings us to current landscape that indicates a trade-off between accuracy and robustness: MLLMs achieve subpar zero-shot classification performance, while their robustness is notably better. Finally, it is worth noting that these benefits of better robustness are not reflected in  LLaVA-1.5, a leading open-source MLLM. LLaVA-1.5 achieves notably lower classification performance while also doing worse on robustness in  comparison to the fine-tuned fusion-based classifier.<br/><br/>
 
 
 						<center>
@@ -241,24 +245,10 @@
 									<td>-2.82 %</td>
 									<td>-19.92 %</td>
 									<td>
-										<a href="./assets/humanitarian_mm_fusion.png" target="_blank" class="img-link">View Image</a>
+										<a href="./assets/humanitarian_mm_fusion.png" target="_blank" class="img-link">View</a>
 										<div class="img-preview"><img src="./assets/humanitarian_mm_fusion.png" style="width: 100px;"></div>
 									</td>
 								</tr>
-
-
-								<!-- <tr>
-									<td>Claude 3 Opus</td>
-									<td>0.67</td>
-									<td>0.00 %</td>
-									<td>-00.00 %</td>
-									<td>-00.00 %</td>
-									<td>-00.00 %</td>
-									<td>
-										<a href="./assets/humanitarian_claude3opus.png" target="_blank" class="img-link">View Image</a>
-										<div class="img-preview"><img src="./assets/humanitarian_claude3opus.png" style="width: 100px;"></div>
-									</td>
-								</tr> -->
 
 								<tr>
 									<td>GPT-4(V)</td>
@@ -268,10 +258,24 @@
 									<td>+1.49 %</td>
 									<td>-2.98 %</td>
 									<td>
-										<a href="./assets/humanitarian_gpt4v.png" target="_blank" class="img-link">View Image</a>
+										<a href="./assets/humanitarian_gpt4v.png" target="_blank" class="img-link">View</a>
 										<div class="img-preview"><img src="./assets/humanitarian_gpt4v.png" style="width: 100px;"></div>
 									</td>
 								</tr>
+
+								<tr>
+									<td>Claude 3 Opus</td>
+									<td>0.56</td>
+									<td>0.01 - 0.04 % %</td>
+									<td>+1.59 %</td>
+									<td>+5.71 %</td>
+									<td>+5.80 %</td>
+									<td>
+										<a href="./assets/humanitarian_claude3opus.png" target="_blank" class="img-link">View</a>
+										<div class="img-preview"><img src="./assets/humanitarian_claude3opus.png" style="width: 100px;"></div>
+									</td>
+								</tr>
+
 								<tr>
 									<td>Gemini Pro</td>
 									<td>0.36</td>
@@ -280,7 +284,7 @@
 									<td>+5.56 %</td>
 									<td>+2.78 %</td>
 									<td>
-										<a href="./assets/humanitarian_gemini.png" target="_blank" class="img-link">View Image</a>
+										<a href="./assets/humanitarian_gemini.png" target="_blank" class="img-link">View</a>
 										<div class="img-preview"><img src="./assets/humanitarian_gemini.png" style="width: 100px;"></div>
 									</td>
 								</tr>
@@ -294,7 +298,7 @@
 									<td>+5.13 %</td>
 									<td>-25.64 %</td>
 									<td>
-										<a href="./assets/humanitarian_llaval1point5.png" target="_blank" class="img-link">View Image</a>
+										<a href="./assets/humanitarian_llaval1point5.png" target="_blank" class="img-link">View</a>
 										<div class="img-preview"><img src="./assets/humanitarian_llaval1point5.png" alt="Model B Image" style="width: 100px;"></div>
 									</td>
 								</tr>
@@ -307,7 +311,7 @@
 									<td>0.00 %</td>
 									<td>+7.69 %</td>
 									<td>
-										<a href="./assets/humanitarian_moondream1.png" target="_blank" class="img-link">View Image</a>
+										<a href="./assets/humanitarian_moondream1.png" target="_blank" class="img-link">View</a>
 										<div class="img-preview"><img src="./assets/humanitarian_moondream1.png" alt="Model B Image" style="width: 100px;"></div>
 									</td>
 								</tr>
